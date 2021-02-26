@@ -1,13 +1,16 @@
 import { Font } from "../types";
 import { getFontId } from "../utils/ids";
 
-const previewFontsStylesheet = document.createElement("style");
-document.head.appendChild(previewFontsStylesheet);
 
 /**
  * Add declaration for applying the specified preview font
  */
 export function applyFontPreview(previewFont: Font, selectorSuffix: string): void {
+	if(typeof document === 'undefined') {
+		return;
+	}
+	const previewFontsStylesheet = document.createElement("style");
+	document.head.appendChild(previewFontsStylesheet);
 	const fontId = getFontId(previewFont.family);
 	const style = `
 			#font-button-${fontId}${selectorSuffix} {
@@ -39,6 +42,10 @@ export function applyActiveFont(
 	previousFontFamily: string,
 	selectorSuffix: string,
 ): void {
+	if(typeof document === 'undefined') {
+		return;
+	}
+
 	const style = `
 		.apply-font${selectorSuffix} {
 			font-family: "${activeFont.family}"${previousFontFamily ? `, "${previousFontFamily}"` : ""};

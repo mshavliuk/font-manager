@@ -11,6 +11,9 @@ function getStylesheetId(fontId: string): string {
  * Check whether a font stylesheet already exists in the document head
  */
 export function stylesheetExists(fontId: string, isPreview?: boolean): boolean {
+	if(typeof document === 'undefined') {
+		return false;
+	}
 	const stylesheetNode = document.getElementById(getStylesheetId(fontId));
 	if (isPreview === null || isPreview === undefined) {
 		return stylesheetNode !== null;
@@ -25,6 +28,9 @@ export function stylesheetExists(fontId: string, isPreview?: boolean): boolean {
  * Attach a new font stylesheet to the document head using the provided content
  */
 export function createStylesheet(fontId: string, isPreview: boolean): void {
+	if(typeof document === 'undefined') {
+		return;
+	}
 	const stylesheetNode = document.createElement("style");
 	stylesheetNode.id = getStylesheetId(fontId);
 	stylesheetNode.setAttribute(PREVIEW_ATTRIBUTE_NAME, isPreview.toString());
@@ -35,6 +41,9 @@ export function createStylesheet(fontId: string, isPreview: boolean): void {
  * Insert the provided styles in the font's <style> element (existing styles are replaced)
  */
 export function fillStylesheet(fontId: string, styles: string): void {
+	if(typeof document === 'undefined') {
+		return;
+	}
 	const stylesheetId = getStylesheetId(fontId);
 	const stylesheetNode = document.getElementById(stylesheetId);
 	if (stylesheetNode) {
@@ -48,6 +57,9 @@ export function fillStylesheet(fontId: string, styles: string): void {
  * Update the value of a stylesheet's "data-is-preview" attribute
  */
 export function setStylesheetType(fontId: string, isPreview: boolean): void {
+	if(typeof document === 'undefined') {
+		return;
+	}
 	const stylesheetId = getStylesheetId(fontId);
 	const stylesheetNode = document.getElementById(stylesheetId);
 	if (stylesheetNode) {
